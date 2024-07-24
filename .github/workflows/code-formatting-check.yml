@@ -10,11 +10,11 @@ on:
 
 jobs:
   format-check:
-    name: Check Formatting
+    name: Check code formatting
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Python

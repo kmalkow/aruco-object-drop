@@ -1,16 +1,16 @@
-name: Dependency Check
+name: Type Check
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-      
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+
 jobs:
-  dependency-check:
-    name: Check dependencies
+  type-check:
+    name: Run mypy for type checking
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12.4' 
+        python-version: '3.12.4'
 
     - name: Install dependencies
       run: |
@@ -28,6 +28,10 @@ jobs:
         pip install poetry
         poetry install
 
-    - name: Check for outdated dependencies
+    - name: Install mypy
       run: |
-        poetry show --outdated
+        poetry add --dev mypy
+
+    - name: Run mypy
+      run: |
+        poetry run mypy .

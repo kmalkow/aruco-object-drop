@@ -1,0 +1,20 @@
+name: Commit Message Check
+
+on: [push]
+
+jobs:
+  commit-message:
+    name: Check commit messages
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Check commit messages
+      run: |
+        COMMIT_MESSAGES=$(git log --format=%B -n 1 HEAD)
+        if [[ ! "$COMMIT_MESSAGES" =~ ^(feat|fix|docs|style|refactor|test|chore)\(.*\):\ .+ ]]; then
+          echo "Invalid commit message format. Use conventional commit format (e.g. "feat: added new feature")."
+          exit 1
+        fi
