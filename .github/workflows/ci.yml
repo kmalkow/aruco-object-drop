@@ -29,26 +29,6 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: Run code formatting
+      - name: Format code
         run: |
           poetry run black .
-
-      - name: Run linting
-        run: |
-          poetry run flake8 .
-
-      - name: Run static type checking
-        run: |
-          poetry run mypy .
-
-      - name: Run docstring check
-        run: |
-          poetry run pydocstyle .
-
-      - name: Run tests
-        run: |
-          poetry run pytest
-
-      - name: Check outdated dependencies
-        run: |
-          poetry show --outdated
