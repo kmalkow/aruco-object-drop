@@ -1,4 +1,9 @@
 # Pull Request
+### Checklist
+- [ ] I have read the [contributing guidelines](CONTRIBUTING.md).
+- [ ] My code follows the coding style of this project (PEP8).
+- [ ] I have updated documentation (if applicable).
+
 ## Description
 Please include a summary of the changes and the related issue. List any dependencies that are required for this change.
 
@@ -8,11 +13,6 @@ Please include a summary of the changes and the related issue. List any dependen
 - [ ] Feature Implementation
 - [ ] Documentation Update
 - [ ] Other (please specify):
-
-## Checklist
-- [ ] I have read the [contributing guidelines](CONTRIBUTING.md).
-- [ ] My code follows the coding style of this project (PEP8).
-- [ ] I have updated documentation (if applicable).
 
 ### Feature Update
 Describe any updates to existing features. Include the names of files affected and a brief description of the changes made. For example:
