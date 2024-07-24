@@ -29,6 +29,46 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: Format code
+      - name: Run code formatting
         run: |
           poetry run black .
+
+      - name: Run linting
+        run: |
+          poetry run flake8 .
+
+      - name: Run static type checking
+        run: |
+          poetry run mypy .
+
+      - name: Run docstring check
+        run: |
+          poetry run pydocstyle .
+
+      - name: Run tests
+        run: |
+          poetry run pytest
+
+      - name: Check outdated dependencies
+        run: |
+          poetry show --outdated
+
+      - name: Validate PR title
+        if: github.event_name == 'pull_request'
+        run: |
+          PR_TITLE=$(jq -r '.pull_request.title' $GITHUB_EVENT_PATH)
+          PR_NUMBER=$(jq -r '.pull_request.number' $GITHUB_EVENT_PATH)
+          if [[ ! "$PR_TITLE" =~ ^\[PR-[0-9]+\]:\ .+ ]]; then
+            echo "Invalid PR title format. It should be '[PR-x]: ...'"
+            exit 1
+          fi
+
+          PREVIOUS_PR_NUMBER=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed" \
+            | jq -r '.[] | select(.title | startswith("[PR-")) | .number' \
+            | sort -n | tail -n1)
+
+          if [ "$PREVIOUS_PR_NUMBER" != "" ] && [ "$PR_NUMBER" -ne "$((PREVIOUS_PR_NUMBER + 1))" ]; then
+            echo "PR number must be consecutive. Expected: $((PREVIOUS_PR_NUMBER + 1))"
+            exit 1
+          fi
