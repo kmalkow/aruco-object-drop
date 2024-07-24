@@ -1,0 +1,14 @@
+#!/bin/bash
+# .git/hooks/pre-push
+
+echo "Running pre-push checks..."
+
+# Run pre-push checks and tests
+make pre-push
+if [ $? -ne 0 ]; then
+    echo "Pre-push checks failed."
+    exit 1
+fi
+
+echo "Pre-push checks passed."
+exit 0

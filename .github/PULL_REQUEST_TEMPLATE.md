@@ -1,7 +1,12 @@
 # Pull Request
 ### Checklist
 - [ ] I have read the [contributing guidelines](CONTRIBUTING.md).
+- [ ] I have performed a self-review of my own code.
+- [ ] My changes generate no new warnings.
+- [ ] I have added tests that prove my fix is effective or that my feature works.
+- [ ] Existing unit tests pass locally with my changes.
 - [ ] My code follows the coding style of this project (PEP8).
+- [ ] I have commented my code, particularly in hard-to-understand areas.
 - [ ] I have updated documentation (if applicable).
 
 ## Description
