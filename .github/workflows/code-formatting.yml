@@ -1,0 +1,45 @@
+name: Code Formatting Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format-check:
+    name: Check Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12.4'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Install black
+      run: |
+        poetry add --dev black
+
+    - name: Check code formatting
+      run: |
+        poetry run black --check .
+      continue-on-error: true
+
+    - name: Report formatting issues
+      if: failure()
+      run: |
+        echo "The code is not formatted according to PEP8."
+        echo "Please run 'make format' to automatically format the code."
+        echo "Then commit and push your changes."
