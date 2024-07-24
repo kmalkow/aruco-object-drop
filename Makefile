@@ -29,7 +29,7 @@ check-docstring:
 	fi
 
 # FORMATTING, LINTING, AND TESTING
-# Format all Python files using black
+# Format all Python files using black=
 .PHONY: format
 format: $(PY_FILES)
 	@echo "🔧 Formatting files (black)..."
