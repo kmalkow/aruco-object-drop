@@ -1,0 +1,110 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Folders
+aruco-object-drop/data/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+test-results/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Pyenv
+.python-version
+
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+
+# Black formatter
+.cache/black/
+
+# Flake8
+.flake8
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pydocstyle
+.pydocstyle
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Generated documentation
+docs/_build/
+
+# Sphinx documentation
+docs/_build/
+
+# PyCharm
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/shelf
+
+# File-based project format
+*.iws
+*.iml
+*.ipr
+
+# WebStorm
+.idea/
