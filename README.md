@@ -1,13 +1,12 @@
-# **aruco-object-drop**: Precision Object Dropping for UAVs
 
-> Welcome aboard!🚀 This framework provides real-time ArUco marker detection and tracking on UAVs for precision object dropping missions, built on top of [OpenCV](https://opencv.org/).
+![Screenshot from 2023-09-17 22-35-36](https://github.com/user-attachments/assets/62dd7b2e-0fcf-4e8d-97e4-80312773b47d)
+
+# aruco-object-drop
+> Welcome aboard!🚀 This framework enables precise object dropping for UAVs through a real-time ArUco marker detection and tracking system, built on top of [OpenCV](https://opencv.org/) in Python.
 
 ## Table of Contents
-
 - [About](#about)
-- [Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+- [Installation](#installation)
 - [Structure](#structure)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -15,123 +14,97 @@
 - [Contact](#contact)
 
 ## About
+The **aruco-object-drop** framework is designed for precise object dropping missions with UAVs. Its goal is to accurately drop an object from a UAV onto a 15x15 cm ArUco marker in outdoor settings. The framework features a real-time ArUco marker detection and tracking system that operates onboard, engineered to be robust and effective in challenging outdoor environments. Developed for the [IMAV 2024](https://2024.imavs.org/) competition, this project focuses on wildlife preservation and aims to enhance precision and reliability in demanding conditions.
 
-**aruco-object-drop** is a robust framework designed for real-time ArUco marker detection and tracking on UAVs in outdoor environments, making it ideal for object dropping missions. Developed for [IMAV 2024](https://2024.imavs.org/), this project is centered around the theme of wildlife preservation and aims to enhance precision and robustness in challenging environments.
+## Installation
+To begin using **aruco-object-drop**, you will need to set up your development environment, clone the repository, and ensure all dependencies are installed. Follow the instructions below to get everything up and running smoothly.
 
-## Getting Started
-
-To begin using **aruco-object-drop**, you'll need to set up your development environment. Follow the instructions below to get everything up and running smoothly.
-
-### Prerequisites
-
-Before you can use **aruco-object-drop**, ensure you have the following tools installed:
-
-#### 1. **Install `pyenv`**
-
+### 1. **Install `pyenv`**
 `pyenv` helps manage multiple Python versions on your system. To install `pyenv`, follow these steps:
 
-1. **Install `pyenv` using pip**:
+- **Install `pyenv` using pip**:
     ```bash
     pip install pyenv
     ```
 
-2. **Set the global Python version**:
+- **Set the local Python version**:
     ```bash
     pyenv install 3.12.4
-    pyenv global 3.12.4
+    cd aruco-object-drop
+    pyenv local 3.12.4
     ```
 
-For more information on `pyenv`, visit the [pyenv GitHub page](https://github.com/pyenv/pyenv).
+For more information on `pyenv`, visit [this](https://github.com/pyenv/pyenv) page.
 
-#### 2. **Install `Poetry`**
+### 2. **Install `poetry`**
+`poetry` is a dependency management tool for Python that simplifies package management and project setup. To install `poetry`, follow these steps:
 
-`Poetry` is a dependency management tool for Python that simplifies package management and project setup.
-
-1. **Install `Poetry` using pip**:
+- **Install `poetry` using pip**:
     ```bash
     pip install poetry
     ```
 
-2. **Configure `Poetry` to use the installed Python version** (if necessary):
+- **Configure `poetry` to use the installed Python version**:
     ```bash
-    poetry env use $(pyenv which python)
+    poetry env use python3.12
     ```
 
-For detailed instructions and more options, refer to the [Poetry documentation](https://python-poetry.org/docs/).
+For more information on `poetry`, visit [this](https://python-poetry.org/docs/) page.
 
-After installing both `pyenv` and `poetry`, you will be ready to install the project dependencies and start using **aruco-object-drop**!
+### 3. **Clone the Repository**
+```bash
+git clone https://github.com/kmalkow/aruco-object-drop.git
+```
 
+### 4. **Navigate to the Project Directory**    
+```bash
+cd aruco-object-drop
+```
 
-### Installation
+### 5. **Install Dependencies**
+```bash
+poetry install
+```
 
-Now that your development environment is set up, you are ready to install **aruco-object-drop**. Follow these steps to set up the project and get it running on your local machine:
-
-#### 1. **Clone the Repository**
-
-    Begin by cloning the **aruco-object-drop** repository from GitHub to your local machine.
-
-    ```bash
-    git clone https://github.com/kmalkow/aruco-object-drop.git
-    ```
-
-#### 2. **Navigate to the Project Directory**
-
-    Once the cloning process is complete, change your working directory to the newly cloned project folder. 
+### 6. **Activate Virtual Environment**
+Activate the virtual environment using the following command:
     
-    ```bash
-    cd aruco-object-drop
-    ```
+```bash
+poetry shell
+```
 
-#### 3. **Install Dependencies**
+And exit the virtual environment using the following command:
 
-    Once you are in the working directory, install the project’s dependencies using Poetry.
-
-    ```bash
-    poetry install
-    ```
-
-#### 4. **Activate Virtual Environment**
-
-    After installing the dependencies, activate the virtual environment using the following command:
+```bash
+exit
+```
     
-    ```bash
-    poetry shell
-    ```
+These commands activate and exit the virtual environment, allowing you to work with the project's dependencies in isolation from your global Python environment.
 
-    And exit the virtual environment using the following command:
+### 7. **Verify the Installation**
+To verify whether the project dependencies are installed correctly, run the following command:
 
-    ```bash
-    exit
-    ```
-    
-    These commands activate and exit the virtual environment, allowing you to work with the project's dependencies in isolation from your global Python environment.
+```bash
+poetry show
+```
 
-#### 5. **Verify the Installation**
+If it shows the same dependencies as in the `pyproject.toml` file, then everything has been installed correctly.
 
-   To verify whether the project dependencies are installed correctly, run the following command:
-
-    ```bash
-    poetry show
-    ```
-
-    If it shows the same __main__ dependencies as in the `pyproject.toml` file, then everything has been installed correctly.
-
-Well done! The **aruco-object-drop** project is now installed correctly and ready for use. If you encounter any issues, seek assistance through the [contact page](#contact).
+Well done! The **aruco-object-drop** framework has been installed correctly and is ready for use. If you encounter any issues, seek assistance through the [contact page](#contact).
 
 ## Structure
+The **aruco-object-drop** project is organized as follows:
 
-The **aruco-object-drop** project is organized to facilitate ease of navigation and development. Here’s a quick overview:
-
-- **`.github/`**: GitHub workflows and pull request template.
-- **`aruco-object-drop/`**: Main directory with:
-  - **`data/`**: Project-specific data files.
-  - **`docs/`**: Documentation files.
-  - **`logs/`**: Log files for tracking variables of interest.
-  - **`src/modules/`**: Core functionality for marker detection and tracking.
-  - **`src/utils/`**: Utility functions and helpers.
-- **`tests/`**: Unit tests for verifying project functionality.
-- **`Makefile`**: Automates tasks such as formatting, linting, static type checking, docstring validation, and unit testing.
-- **`README.md`**: Project overview and setup instructions.
+- `.github/`: GitHub workflows and pull request template.
+- `aruco-object-drop/`: Main directory with:
+  - `data/`: Data files.
+  - `docs/`: Documentation.
+  - `logs/`: Log files.
+  - `src/modules/`: Marker detection and tracking.
+  - `src/utils/`: Utility functions.
+- `tests/`: Unit tests.
+- `Makefile`: Task automation (formatting, linting, testing, etc.).
+- `README.md`: Project overview and setup.
 
 ## Usage
 
@@ -143,15 +116,15 @@ We welcome contributions to enhance **aruco-object-drop**. If you have suggestio
 
 ## License
 
-**aruco-object-drop** is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the [LICENSE](LICENSE) file for more details.
+The **aruco-object-drop** framework is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
 
 For any questions or further information, please contact:
 
-- **Kevin Malkow**
+- Kevin Malkow
 - 📧 Email: [k.malkow@student.tudelft.nl](mailto:k.malkow@student.tudelft.nl)
-- 🌐 Project Page: [https://github.com/kmalkow/aruco-object-drop](https://github.com/kmalkow/aruco-object-drop)
+- 🌐 Code Owner Page: [https://github.com/kmalkow](https://github.com/kmalkow)
 
 ---
 
