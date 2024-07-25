@@ -23,7 +23,7 @@ check-type:
 check-docstring:
 	@echo "🔍 Checking docstrings (pydocstyle)..."
 	@if [ -n "$(PY_FILES)" ]; then \
-		poetry run pydocstyle --ignore D104 $(PACKAGE_DIR) tests; \
+		poetry run pydocstyle $(PACKAGE_DIR) tests; \
 	else \
 		echo "No Python files found for docstring checking."; \
 	fi
