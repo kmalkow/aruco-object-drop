@@ -1,19 +1,22 @@
 [tool.poetry]
 name = "aruco-object-drop"
 version = "0.1.0"
-description = ""
+description = "ArUco marker detection and tracking system, designed for object drop missions using UAVs in outdoor environments."
 authors = ["kmalkow <k.malkow@student.tudelft.nl>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-opencv-python = "^4.10.0.84"
 black = "^24.4.2"
-pytest = "^8.3.1"
-pydocstyle = "^6.3.0"
-mypy = "^1.11.0"
 flake8 = "^7.1.0"
-
+mypy = "^1.11.0"
+pydocstyle = "^6.3.0"
+pytest = "^8.3.1"
+opencv-contrib-python = "^4.10.0.84"
+pymap3d = "^3.1.0"
+scipy = "^1.14.0"
+plotly = "^5.23.0"
+numpy = "^2.0.1"
 
 [build-system]
 requires = ["poetry-core"]
