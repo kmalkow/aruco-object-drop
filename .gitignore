@@ -23,14 +23,10 @@ wheels/
 .installed.cfg
 *.egg
 
-# Folders
+# Ignore specific data folder
 aruco-object-drop/data/
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
+# Unit test / coverage reports (Ensure these are not affecting directories themselves)
 htmlcov/
 .tox/
 .nox/
@@ -89,22 +85,5 @@ Thumbs.db
 # Generated documentation
 docs/_build/
 
-# Sphinx documentation
-docs/_build/
-
 # PyCharm
-# User-specific stuff:
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/dictionaries
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-.idea/shelf
-
-# File-based project format
-*.iws
-*.iml
-*.ipr
-
-# WebStorm
 .idea/
