@@ -13,9 +13,10 @@ To contribute to this repository, follow the steps below:
 
 1. Clone the repository.
 2. Create a new branch for your changes.
-3. Make the necessary changes and commit them using the guidelines mentioned below.
-4. Push your changes to the repository.
-5. Open a pull request to the main branch of the repository, following the Pull Request process described below.
+3. Make the necessary changes.
+4. Run `make pre-commit` and commit changes using the guidelines mentioned below.
+5. Run `make pre-push` and push your changes to the repository.
+6. Open a pull request to the main branch of the repository, following the Pull Request process described below.
 
 ### Coding Conventions
 When writing Python code, please adhere to the [PEP 8](https://www.python.org/dev/peps/pep-0008/) guidelines.
@@ -74,7 +75,7 @@ We have implemented the following hooks to ensure code quality and maintain cons
                 assert add_numbers(-1, 1) == 1 
             ```
 
-You can also manually run the pre-commit and pre-push hooks via the `Makefile` commands by executing the following commands in the terminal:
+You can manually run the pre-commit and pre-push hooks via the `Makefile` commands by executing the following commands in the terminal:
 
 ```bash
 make pre-commit
