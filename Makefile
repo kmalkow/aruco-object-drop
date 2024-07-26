@@ -1,7 +1,7 @@
 # Makefile
 
 # Directory containing the main package
-PACKAGE_DIR = aruco-object-drop
+PACKAGE_DIR = aruco_object_drop
 
 # Find all Python files in the main package and tests directories
 PY_FILES = $(shell find $(PACKAGE_DIR) tests -name '*.py')
