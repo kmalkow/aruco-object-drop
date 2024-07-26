@@ -36,46 +36,43 @@ When writing commit messages, please follow the conventional commit format. The 
 Note: The parentheses () in the commit message are not optional and must be used to provide additional context.
 
 #### Example
-**Accepted commit message**: `git commit -m "chore(build): Added new build chore."`
-**Rejected commit message**: `git commit -m "Added new build chore."`
+- Accepted commit message: `git commit -m "chore(build): Added new build chore."`
+- Rejected commit message: `git commit -m "Added new build chore."`
 
 ### Hooks
 We have implemented the following hooks to ensure code quality and maintain consistency:
 
 - **pre-commit hook**: This hook checks for code format using `black`, linting using `flake8`, static types using `mypy`, and docstrings using `pydocstyle`. Here is an example of code that adheres to all of these guidelines and one that does not:
-
-#### Example
-- **Accepted code**:
-    ```python
-    def add_numbers(a: int, b: int) -> int:
-        """Add two numbers."""
-        return a + b
-    ```
-
-- **Rejected code**:
-    ```python
-    def addNumbers(a,b):
-    return a+b
-    ```
+    - **Example**
+        - Accepted code:
+            ```python
+            def add_numbers(a: int, b: int) -> int:
+                """Add two numbers."""
+                return a + b
+            ```
+        - Rejected code:
+            ```python
+            def addNumbers(a,b):
+            return a+b
+            ```
 
 - **commit-msg hook**: This hook checks for conventional commit message format as mentioned above.
 
 - **pre-push hook**: This hook runs unit tests using `pytest`. Here is an example that will be accepted and one that will not be:
-
-#### Example
-- **Accepted unit test**: All unit tests pass successfully.
-    ```python
-    def test_add_numbers():
-        assert add_numbers(2, 3) == 5
-        assert add_numbers(-1, 1) == 0
-    ```
-
-- **Rejected unit test**: All unit tests fail.
-    ```python
-    def test_add_numbers():
-        assert add_numbers(2, 3) == 6
-        assert add_numbers(-1, 1) == 1 
-    ```
+    - **Example**
+        - Accepted unit tests:
+            ```python
+            def test_add_numbers():
+                assert add_numbers(2, 3) == 5
+                assert add_numbers(-1, 1) == 0
+            ```
+        
+        - Rejected unit tests:
+            ```python
+            def test_add_numbers():
+                assert add_numbers(2, 3) == 6
+                assert add_numbers(-1, 1) == 1 
+            ```
 
 You can also manually run the pre-commit and pre-push hooks via the `Makefile` commands by executing the following commands in the terminal:
 
