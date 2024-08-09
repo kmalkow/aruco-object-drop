@@ -5,6 +5,7 @@ import time
 import matplotlib.pyplot as plt
 from datetime import datetime
 from mpl_toolkits.mplot3d import Axes3D  # Importing for 3D plotting
+import tracking_kalman
 
 def SaveImage(frame):
     # Save images in the pictures directory using the local time as a marker
@@ -49,6 +50,10 @@ def load_cam_para():
     return camera_Matrix, distortion_Coeff
 
 def main():
+    global previous_time
+    global x
+    global P
+
     # Check that we have a valid ArUco marker
     if ARUCO_DICT.get(desired_aruco_dictionary, None) is None:
         print(f"[INFO] ArUCo tag of '{desired_aruco_dictionary}' is not supported")
@@ -75,10 +80,14 @@ def main():
     ax.set_xlabel('X (m)')
     ax.set_ylabel('Y (m)')
     ax.set_zlabel('Z (m)')
-    line, = ax.plot([], [], [], '-o', markersize=1)  # Line object for updating the plot
+    line, = ax.plot([], [], [], '-o', markersize=0.5)  # Line object for updating the plot
+
+    detection_counter = 0
 
     while True:
-        time.sleep(0.05)
+        # Set refresh rate
+        #time.sleep(0.05)
+
         # Capture frame-by-frame
         ret, frame = cap.read()
 
@@ -130,8 +139,24 @@ def main():
                     Rot_mat_marker_in_cam, _ = cv2.Rodrigues(np.array(rvec[0][0]))
                     Rot_mat_cam_in_marker = np.transpose(Rot_mat_marker_in_cam)
                     new_XYZ = np.dot(Rot_mat_cam_in_marker, np.array((X_ARUCO, Y_ARUCO, Z_ARUCO)).T)
+                    
+                    # Initialize Kalman filter on the first detection
+                    if detection_counter == 0:
+                        bool_initialize = True
+                        previous_time = None
+                        x = None
+                        P = None
+                    else:
+                        bool_initialize = False
+
+                    # Apply tracking Kalman
+                    x, P, previous_time = tracking_kalman.tracking_KF(new_XYZ, bool_initialize, previous_time, x, P)
+                    new_XYZ = x.T[0:3]
+                    detection_counter = detection_counter + 1
+                    print(f'P: {P}')
 
                     # Add new data to plot
+                    # Minus due to sign conversion
                     x_data.append(-new_XYZ[0])
                     y_data.append(-new_XYZ[1])
                     z_data.append(-new_XYZ[2])
@@ -139,7 +164,7 @@ def main():
                     # Update the 3D plot
                     line.set_data(x_data, y_data)
                     line.set_3d_properties(z_data)
-                    ax.set_title(f'Real-time ArUco Position: {new_XYZ}')
+                    ax.set_title(f'Real-time Camera Position: {new_XYZ}')
                     plt.draw()
                     plt.pause(0.01)
 
