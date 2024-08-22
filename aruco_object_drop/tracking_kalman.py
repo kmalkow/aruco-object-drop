@@ -28,7 +28,8 @@ def tracking_KF(xyz_observation, bool_initialize, previous_time, x, P):
                         [0, 0, 0, 0, 0,  0]])
         
         previous_time = time.time()
-        return x, P, previous_time
+        dt = 0.
+        return x, P, previous_time, dt
 
     # Calculate time step
     dt = time.time() - previous_time
@@ -87,4 +88,4 @@ def tracking_KF(xyz_observation, bool_initialize, previous_time, x, P):
     # Updated estimate covariance
     P = (np.eye(6) - (K @ H)) @ P
 
-    return x, P, previous_time
+    return x, P, previous_time, dt

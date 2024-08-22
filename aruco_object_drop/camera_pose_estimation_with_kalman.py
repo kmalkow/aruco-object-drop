@@ -2,9 +2,7 @@ import numpy as np
 import cv2
 import os
 import time
-import matplotlib.pyplot as plt
 from datetime import datetime
-from mpl_toolkits.mplot3d import Axes3D  # Importing for 3D plotting
 import tracking_kalman
 
 
@@ -52,6 +50,8 @@ def main():
     global previous_time
     global x
     global P
+    global pixel_w
+    global pixel_h
 
     # Check that we have a valid ArUco marker
     if ARUCO_DICT.get(desired_aruco_dictionary, None) is None:
@@ -63,23 +63,12 @@ def main():
     this_aruco_dictionary = cv2.aruco.getPredefinedDictionary(ARUCO_DICT[desired_aruco_dictionary])
     this_aruco_parameters = cv2.aruco.DetectorParameters()
 
-    cap = cv2.VideoCapture(usb_num)
+    cap = cv2.VideoCapture(usb_num, cv2.CAP_DSHOW)
+    # Set input resolution to 1920x1440 for Mapir
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, pixel_w)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, pixel_h)
 
     XYZ_ARUCO_cam_ref = []
-
-    # Initialize the plot for real-time updates
-    plt.ion()  # Turn on interactive mode
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')  # Create a 3D plot
-    x_data, y_data, z_data = [], [], []
-
-    ax.set_xlim(-0.5, 0.5)  # Set limits for the plot, adjust as necessary
-    ax.set_ylim(-0.5, 0.5)
-    ax.set_zlim(0, 1)  # Adjust Z limits based on expected depth range
-    ax.set_xlabel('X (m)')
-    ax.set_ylabel('Y (m)')
-    ax.set_zlabel('Z (m)')
-    line, = ax.plot([], [], [], '-o', markersize=0.5)  # Line object for updating the plot
 
     detection_counter = 0
 
@@ -89,6 +78,9 @@ def main():
 
         # Capture frame-by-frame
         ret, frame = cap.read()
+        if frame.shape[0] != pixel_h or frame.shape[1] != pixel_w:
+            print(frame.shape)
+            raise ValueError(f'Input and requested frame dims do not agree!')
 
         # Detect ArUco markers in the video frame
         (corners, ids, rejected) = cv2.aruco.detectMarkers(frame, this_aruco_dictionary, parameters=this_aruco_parameters)
@@ -125,7 +117,7 @@ def main():
                     
                     # Draw the ArUco marker ID on the video frame
                     # The ID is always located at the top_left of the ArUco marker
-                    cv2.putText(frame, 'ID: '+ str(marker_id), (top_left[0], top_left[1] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    #cv2.putText(frame, 'ID: '+ str(marker_id), (top_left[0], top_left[1] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
                     # Get rotation and translation of the marker in the camera Frame
                     rvec, tvec, _ = cv2.aruco.estimatePoseSingleMarkers(marker_corner, MARKER_SIZE, camera_Matrix, distortion_Coeff)
@@ -152,20 +144,6 @@ def main():
                     x, P, previous_time, dt = tracking_kalman.tracking_KF(new_XYZ, bool_initialize, previous_time, x, P)
                     new_XYZ = x.T[0:3]
                     detection_counter = detection_counter + 1
-                    #print(f'P: {P}')
-
-                    # Add new data to plot
-                    # Minus due to sign conversion
-                    x_data.append(-new_XYZ[0])
-                    y_data.append(-new_XYZ[1])
-                    z_data.append(-new_XYZ[2])
-
-                    # Update the 3D plot
-                    line.set_data(x_data, y_data)
-                    line.set_3d_properties(z_data)
-                    ax.set_title(f'Real-time Camera Position: {new_XYZ}')
-                    plt.draw()
-                    #plt.pause(timestep)
 
                     # Draw the ArUco offset on the video frame
                     cv2.putText(frame, str((round(new_XYZ[0],3), round(new_XYZ[1],3), round(new_XYZ[2],3))), (top_right[0], top_right[1] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
@@ -188,13 +166,15 @@ def main():
 
 
 # -------------------All parameters--------------------
-MARKER_SIZE = 0.049 # meters
-Marker_id_truth = 0
-timestep = 0.005
-desired_aruco_dictionary = "DICT_4X4_50"
-pathLoad = 'cameraCalibration_mapir.xml'
+MARKER_SIZE = 0.147 # meters
+Marker_id_truth = 420
+timestep = None
+desired_aruco_dictionary = "DICT_5X5_1000"
+pathLoad = 'cameraCalibration_random_480p.xml'
+pixel_w = 640 # width
+pixel_h = 480 # height
 camera_Matrix, distortion_Coeff = load_cam_para()
-usb_num = 0
+usb_num = 1
 # -------------------All parameters--------------------
 
 
